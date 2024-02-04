@@ -1,0 +1,23 @@
+{
+     "points": [
+       {
+         "id": 1,
+         "name": "Point 1",
+         "lat": 53.804501,
+         "lng": 20.392765,
+         "url": "",
+         "img": "",
+         "content": "Some test content to display"
+       },
+       {
+         "id": 2,
+         "name": "Point 2",
+         "lat": 53.104501,
+         "lng": 20.992765,
+         "url": "",
+         "img": "",
+         "content": "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Exercitationem quia molestias ut. Officia placeat eaque ex labore. Rerum fugit, voluptas perspiciatis quos distinctio labore sed voluptate illo explicabo, hic eum."
+       }
+     ]
+   }
+   
