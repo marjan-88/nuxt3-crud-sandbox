@@ -1,9 +1,8 @@
 <template>
 <main>
-
-     <NuxtLayout >
-          <PageHeader />          
-          <NuxtPage class="wrapper-primary p-2" />
+     <NuxtLayout >            
+          <PageHeader v-if="isAuthenticated" />   
+          <NuxtPage class="wrapper-primary p-2"></NuxtPage>
      </NuxtLayout>
 </main>
      
@@ -11,6 +10,10 @@
 <script setup lang="ts">
 import { useMapPointsStore } from '~/stores/MapPointsStore';
 const mapPointsStore = useMapPointsStore();
+const { status } = useAuth();
+const isAuthenticated = computed(() => status.value === 'authenticated' ? true : false);
+console.log('is authenticated ?',isAuthenticated.value);
+
 
 onMounted(() => {
      mapPointsStore.fetchPoints();
@@ -31,11 +34,13 @@ useHead({
 .page-enter-active,
 .page-leave-active {
      transition: all 0.2s linear;
+     filter: blur(3px);
+
 }
 
 .page-enter-from,
 .page-leave-to {
      opacity: 0;
-     filter: grayscale(1);
+     filter: blur(0);
 }
 </style>

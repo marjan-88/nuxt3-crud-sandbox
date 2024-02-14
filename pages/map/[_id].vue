@@ -8,7 +8,7 @@
           <div class="p-2 border-dashed border-2 border-sky-500" v-if="!isLoading">
                <h2 v-if="mapPoint === undefined || null">No content found</h2>
                <div v-else>
-                    <div class="flex flex-col gap-y-4 " >
+                    <div class="flex flex-col gap-y-4 ">
                          <p>Name: {{ mapPoint?.name }}</p>
                          <p>Latitude: {{ mapPoint?.lat }}</p>
                          <p>Longtitude: {{ mapPoint?.lng }}</p>
@@ -22,7 +22,7 @@
                          Delete point
                          <el-icon class="ml-2">
                               <ElIconDelete />
-                         </el-icon>                    </el-button>
+                         </el-icon> </el-button>
 
                </div>
           </div>
@@ -41,17 +41,17 @@ const { mapPoints, isLoading } = storeToRefs(mapPointsStore);
 const point_ID = route.params._id;
 
 const mapPoint = computed(() => {
-  return mapPoints.value.find(point => point?._id?.toString() === point_ID);
+     return mapPoints.value.find(point => point?._id?.toString() === point_ID);
 });
 
 const onDelete = () => {
-  const pointToDelete = mapPoints.value.find(point => point?._id?.toString() === point_ID);
+     const pointToDelete = mapPoints.value.find(point => point?._id?.toString() === point_ID);
 
-  if (pointToDelete && pointToDelete._id) {
-    mapPointsStore.removePoint(pointToDelete._id.toString());
-  } else {
-    console.error('Point or point._id is undefined or null');
-  }
+     if (pointToDelete && pointToDelete._id) {
+          mapPointsStore.removePoint(pointToDelete._id.toString());
+     } else {
+          console.error('Point or point._id is undefined or null');
+     }
 };
 
 

@@ -3,15 +3,19 @@
 }
 html {
      font-family: $fontFamily;
+     font-size: 16px;
 }
 body {
-     min-height: 100vh;
+     background-color: #cecece2f;
 }
 #__nuxt {
      display: flex;
      flex-direction: column;
-     height: calc(100vh - 75px);
+     min-height: 100vh;
 }
 main {
-     flex: 1;
+     display: flex;
+     flex-direction: column;
+     flex: 1;     
+     padding: 0 18px;
 }
