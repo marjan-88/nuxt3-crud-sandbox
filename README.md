@@ -1,3 +1,5 @@
+# This is a simple/unfinished sandbox of crud app, made to get to know better Nuxt framework.
+ 
 # Nuxt 3 Minimal Starter
 
 Look at the [Nuxt 3 documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
