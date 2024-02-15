@@ -86,7 +86,7 @@ const handleClose = (done: () => void) => {
           width:70%;
      }
      @media(min-width: $lg){
-          width: 55%;
+          width: 35%;
      }
 }
 </style>

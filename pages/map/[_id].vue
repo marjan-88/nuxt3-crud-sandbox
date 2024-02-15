@@ -5,10 +5,10 @@
                     <span class="text-large font-600 mr-3"> Map - point details </span>
                </template>
           </el-page-header>
-          <div class="p-2 border-dashed border-2 border-sky-500" v-if="!isLoading">
-               <h2 v-if="mapPoint === undefined || null">No content found</h2>
+          <div class="p-2 bg-white rounded-md shadow-md" v-if="!isLoading">
+               <h2 class="p-2" v-if="mapPoint === undefined || null">No content found</h2>
                <div v-else>
-                    <div class="flex flex-col gap-y-4 ">
+                    <div class="flex flex-col gap-y-4 p-2">
                          <p>Name: {{ mapPoint?.name }}</p>
                          <p>Latitude: {{ mapPoint?.lat }}</p>
                          <p>Longtitude: {{ mapPoint?.lng }}</p>
@@ -18,11 +18,14 @@
                          <p>Created At: {{ mapPoint?.createdAt }}</p>
                          <p>Updated At: {{ mapPoint?.updatedAt }}</p>
                     </div>
-                    <el-button class="w-max mt-4" @click="onDelete">
-                         Delete point
-                         <el-icon class="ml-2">
-                              <ElIconDelete />
-                         </el-icon> </el-button>
+                    <div class="p-2">
+                         <el-button class="w-max mt-4" type="danger" @click="onDelete">
+                              Delete point
+                              <el-icon class="ml-2">
+                                   <ElIconDelete />
+                              </el-icon> </el-button>
+
+                    </div>
 
                </div>
           </div>
@@ -36,6 +39,7 @@
 import { computed } from 'vue';
 import { useMapPointsStore } from '~/stores/MapPointsStore';
 const route = useRoute();
+const router = useRouter();
 const mapPointsStore = useMapPointsStore();
 const { mapPoints, isLoading } = storeToRefs(mapPointsStore);
 const point_ID = route.params._id;
@@ -44,20 +48,26 @@ const mapPoint = computed(() => {
      return mapPoints.value.find(point => point?._id?.toString() === point_ID);
 });
 
+
 const onDelete = () => {
      const pointToDelete = mapPoints.value.find(point => point?._id?.toString() === point_ID);
-
-     if (pointToDelete && pointToDelete._id) {
-          mapPointsStore.removePoint(pointToDelete._id.toString());
-     } else {
-          console.error('Point or point._id is undefined or null');
+     if (pointToDelete ) {
+          ElMessageBox.confirm('Are you sure to delete this point permanently?')
+               .then(() => {               
+                    const idToDelete = pointToDelete._id!.toString(); 
+                    if (idToDelete) {
+                         mapPointsStore.removePoint(idToDelete);              
+                         router.push('/map');          
+                    }
+               })
+               .catch(() => {
+                    // catch error
+               });
      }
 };
-
 
 
 </script>
 
 <style scoped>
-/* Add your component-specific styles here */
 </style>

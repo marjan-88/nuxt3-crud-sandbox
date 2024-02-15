@@ -1,14 +1,14 @@
 <template>
      <div title="Add Point" :isVisible="dialogVisible" :isForm="true">
           <el-form :label-position="labelPosition" ref="formDialogRef" :rules="rules" :model="form" label-width="auto"
-               class="flex flex-row gap-y-3 flex-wrap" status-icon>
+               class="flex flex-row gap-3  flex-wrap" status-icon>
 
                <el-form-item label="Name" class="basis-full" prop="name">
                     <el-input v-model="form.name" />
                </el-form-item>
-               <el-form-item label="Category" class="basis-full md:basis-1/3" prop="category">
+               <el-form-item label="Category" class="basis-full md:basis-1/1" prop="category">
                     <el-select v-model="form.category" multiple clearable collapse-tags placeholder="Select"
-                         popper-class="custom-header" :max-collapse-tags="2" style="width: 240px">
+                         popper-class="custom-header" :max-collapse-tags="2" >
                          <template #header>
                               <el-checkbox v-model="checkAll" :indeterminate="indeterminate" @change="handleCheckAll">
                                    All
@@ -194,37 +194,3 @@ watch(categorySelect, (val) => {
      }
 }
 </style>
-<!-- const submitForm = async (formEl: FormInstance | undefined) => {
-     if (!formEl) return;
-     try {
-          //add validation
-
-          await formEl.validate((valid, fields) => {
-               if (valid) {
-                    form.name = form.name;
-                    form.category = categorySelect.value;
-                    form.lat = form.lat;
-                    form.lng = form.lng;
-                    form.url = form.url;
-                    form.img = form.img;
-                    form.content = form.content;
-
-                    const newPoint: MapPoint = {
-                         ...form,
-                    };
-                    // mapPointsStore.addPoint(newPoint);
-                    emit('form-submitted');
-
-                    console.log('submit!')
-               } else {
-                    console.log('error submit!', fields)
-               }
-          })
-
-     } catch (error) {
-          console.error('Error submitting form:', error);
-          // Handle error, show user-friendly message, etc.
-     } finally {
-          formEl.resetFields();
-     }
-}; -->
