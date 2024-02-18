@@ -2,7 +2,7 @@
 <main>
      <NuxtLayout >            
           <PageHeader v-if="isAuthenticated" />   
-          <NuxtPage class="wrapper-primary p-2"></NuxtPage>
+          <NuxtPage ></NuxtPage>
      </NuxtLayout>
 </main>
      

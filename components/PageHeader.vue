@@ -25,6 +25,7 @@ const isActive = (path: string) => {
 const links = [
      { to: '/', label: 'Home' },
      { to: '/map', label: 'Map' },
+     { to: '/manage-points', label: 'Manage points' },
      // { to: '/contact', label: 'Contact' },
 ];
 

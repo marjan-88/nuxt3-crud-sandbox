@@ -1,9 +1,8 @@
 <template>
   <section class="flex flex-col flex-1 justify-center">
+     <!-- class="wrapper-primary p-2" -->
        <div class="wrapper-xsmall ">
             <div class="bg-white p-4 rounded-md shadow-md">
-
-
                  <div class="flex justify-center gap-x-4">
                       <h1 class="text-center font-semibold mb-4">Log in</h1>
                       <NuxtLink class="text-center font-semibold mb-4 text-gray-400 hover:text-black" to="/register" >

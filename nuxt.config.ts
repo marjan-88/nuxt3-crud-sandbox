@@ -23,7 +23,8 @@ export default defineNuxtConfig({
 		"@element-plus/nuxt",
 		"@nuxtjs/tailwindcss",
 		"nuxt-mongoose",
-		"@sidebase/nuxt-auth"
+		"@sidebase/nuxt-auth",
+		'nuxt3-leaflet'
 	],
 	mongoose: {
 		uri: process.env.MONGODB_URI,

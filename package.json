@@ -16,6 +16,7 @@
     "@sidebase/nuxt-auth": "^0.6.7",
     "element-plus": "^2.4.4",
     "nuxt": "^3.9.0",
+    "nuxt3-leaflet": "^1.0.12",
     "vue": "latest",
     "vue-router": "^4.2.5"
   },

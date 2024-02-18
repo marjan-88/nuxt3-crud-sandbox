@@ -4,18 +4,19 @@
 html {
      font-family: $fontFamily;
      font-size: 16px;
+  
 }
 body {
      background-color: #cecece2f;
+ 
 }
 #__nuxt {
      display: flex;
      flex-direction: column;
-     min-height: 100vh;
+     min-height: calc(100dvh - 64px);
 }
 main {
      display: flex;
      flex-direction: column;
      flex: 1;     
-     padding: 0 18px;
 }
