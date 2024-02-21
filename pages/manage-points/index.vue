@@ -9,7 +9,7 @@
                <div v-else>
                     <div>
                          <div class="card-header">
-                              <h2 class="font-semibold mb-4">List of points: <span>{{ count }}</span></h2>
+                              <h2 class="font-semibold mb-4">List of points: <span>{{ originalMapPointsLength }}</span></h2>
                          </div>
                          <div class="flex gap-4 items-center justify-between  mb-4">
                               <el-button type="primary" class="w-max " @click="dialogVisible = true">
@@ -60,7 +60,6 @@ definePageMeta({
 const mapPointsStore = useMapPointsStore();
 const {
      mapPoints,
-     count,
      isLoading
 } = storeToRefs(mapPointsStore);
 const searchInput = ref('');
@@ -75,15 +74,6 @@ const handlePointsFilter = useDebounceFn(() => {
 }, 500);
 
 
-
-// const filteredMapPoints = computed(() => {
-//      return mapPoints.value.filter(marker => {
-//           const name = marker.name.toLowerCase();
-//           const searchTerm = searchInput.value.toLowerCase();
-//           return name.includes(searchTerm);
-//      });
-// });
-
 const dialogVisible = ref(false);//trigger visibility
 const onCancel = () => {
      dialogVisible.value = false;
@@ -93,7 +83,16 @@ const handleChildDialogOpened = () => {
      console.log('Child component is opened! - parent');
 }
 
+const originalMapPointsLength = ref(mapPoints.value.length);
 
+// Watch for changes in mapPoints
+watch(mapPoints, (newMapPoints, oldMapPoints) => {
+    // Check if the length of mapPoints has increased
+    if (newMapPoints.length > oldMapPoints.length) {
+        // Update filteredMapPoints with the new mapPoints
+        filteredMapPoints.value = newMapPoints;
+    }
+});
 
 
 </script>
