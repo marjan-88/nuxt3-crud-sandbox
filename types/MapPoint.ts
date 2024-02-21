@@ -2,6 +2,7 @@ import mongoose from "mongoose";
 export interface MapPoint {
 	_id?: mongoose.Types.ObjectId;
 	name: string;
+	city: string;
 	category?: string | {}[];
 	lat: number;
 	lng: number;

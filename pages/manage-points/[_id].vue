@@ -1,5 +1,5 @@
 <template>
-     <div>
+     <div class="wrapper-primary">
           <el-page-header class="mb-4" @back="$router.back()">
                <template #content>
                     <span class="text-large font-600 mr-3"> Map - point details </span>
@@ -10,6 +10,7 @@
                <div v-else>
                     <div class="flex flex-col gap-y-4 p-2">
                          <p>Name: {{ mapPoint?.name }}</p>
+                         <p>Name: {{ mapPoint?.city }}</p>
                          <p>Latitude: {{ mapPoint?.lat }}</p>
                          <p>Longtitude: {{ mapPoint?.lng }}</p>
                          <p>Content: {{ mapPoint?.content }}</p>

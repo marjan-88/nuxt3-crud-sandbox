@@ -6,6 +6,9 @@
                <el-form-item label="Name" class="basis-full" prop="name">
                     <el-input v-model="form.name" />
                </el-form-item>
+               <el-form-item label="City" class="basis-full" prop="city">
+                    <el-input v-model="form.city" />
+               </el-form-item>
                <el-form-item label="Category" class="basis-full md:basis-1/1" prop="category">
                     <el-select v-model="form.category" multiple clearable collapse-tags placeholder="Select"
                          popper-class="custom-header" :max-collapse-tags="2" >
@@ -77,6 +80,7 @@ const categories = ref([
 interface RuleForm extends Omit<MapPoint, '_id' | 'rating' | 'isFavorite' | 'createdAt' | 'updatedAt'>{};
 const form = reactive<RuleForm>({
      name: '',
+     city: '',
      category: '',
      lat: 0,
      lng: 0,
@@ -89,6 +93,10 @@ const rules = reactive<FormRules<RuleForm>>({
      name: [
           { required: true, message: 'Please enter name', trigger: 'blur' },
           { min: 3, max: 15, message: 'Length should be 3 to 15', trigger: 'blur' },
+     ],
+     city: [
+          { required: true, message: 'Please enter city', trigger: 'blur' },
+          { min: 3, max: 35, message: 'Length should be 3 to 35', trigger: 'blur' },
      ],
      category: [      
           { type: 'array', required: true,  message: 'Please select at least 1', trigger: 'change' },
@@ -140,6 +148,7 @@ const submitForm = async (formEl: FormInstance | undefined) => {
                try {
                     const newPoint: MapPoint = {
                          name: form.name,
+                         city: form.city,
                          category: form.category,
                          lat: form.lat,
                          lng: form.lng,
@@ -153,9 +162,7 @@ const submitForm = async (formEl: FormInstance | undefined) => {
                     console.error('Error adding new point:', error);
                } finally {
                     formEl.resetFields();
-               }
-
-     
+               }     
                console.log('submit!')
           } else {
                console.log('error submit!', fields)

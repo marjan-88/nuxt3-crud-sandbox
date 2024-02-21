@@ -1,7 +1,7 @@
 
 <template>
      <div class="h-full wrapper-primary ">
-      
+
           <div class="flex flex-col p-2 h-full wrapper-primary" v-if="!isLoading">
                <div v-if="mapPoints.length <= 0">
                     <h2>No content found</h2>
@@ -18,23 +18,18 @@
                                         <ElIconPlus />
                                    </el-icon>
                               </el-button>
-                              <el-input
-                                   v-model="searchInput"
-                                        class=""
-                                        placeholder="Search"
-                                        clearable                                                                             
-                                   :prefix-icon="Search"
-                                   
-                              />
+                              <el-input v-model="searchInput" class="" placeholder="Search" clearable @input="handlePointsFilter"
+                                   :prefix-icon="Search" />
 
                          </div>
-                         <ul class="grid grid-cols-1 divide-y bg-white rounded-md shadow-md" >
-                              <li v-for="marker in filteredMapPoints" :key="marker._id?.toString()" class="flex align-center hover:bg-gray-50 p-2">
+                         <ul class="grid grid-cols-1 divide-y bg-white rounded-md shadow-md" v-auto-animate>
+                              <li v-for="marker in filteredMapPoints" :key="marker._id?.toString()"
+                                   class="flex align-center hover:bg-gray-50 p-2">
                                    <NuxtLink class="p-2 w-full" :to="`/manage-points/${marker._id}`">
-                                        {{ marker.name }}
+                                        {{ marker.name }} ({{ marker.city }})
                                    </NuxtLink>
                               </li>
-                         </ul>                     
+                         </ul>
                     </div>
                </div>
 
@@ -59,7 +54,7 @@ import { useMapPointsStore } from '~/stores/MapPointsStore';
 import { Search } from '@element-plus/icons-vue';
 
 definePageMeta({
-  middleware: 'auth'
+     middleware: 'auth'
 })
 
 const mapPointsStore = useMapPointsStore();
@@ -68,17 +63,26 @@ const {
      count,
      isLoading
 } = storeToRefs(mapPointsStore);
-
-
 const searchInput = ref('');
+const filteredMapPoints = ref(mapPoints.value);
+const handlePointsFilter = useDebounceFn(() => {
+    filteredMapPoints.value = mapPoints.value.filter(marker => {
+        const name = marker.name.toLowerCase();
+        const city = marker.city.toLowerCase();
+        const searchTerm = searchInput.value.toLowerCase();
+        return name.includes(searchTerm) || city.includes(searchTerm);
+    });
+}, 500);
 
-const filteredMapPoints = computed(() => {
-  return mapPoints.value.filter(marker => {    
-    const name = marker.name.toLowerCase();
-    const searchTerm = searchInput.value.toLowerCase();
-    return name.includes(searchTerm);
-  });
-});
+
+
+// const filteredMapPoints = computed(() => {
+//      return mapPoints.value.filter(marker => {
+//           const name = marker.name.toLowerCase();
+//           const searchTerm = searchInput.value.toLowerCase();
+//           return name.includes(searchTerm);
+//      });
+// });
 
 const dialogVisible = ref(false);//trigger visibility
 const onCancel = () => {
