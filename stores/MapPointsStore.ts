@@ -17,7 +17,7 @@ export const useMapPointsStore = defineStore("mapPoints", () => {
 			'points',
 			() => $fetch(getUrl)
 		  )
-		  console.log(data.value);
+		//   console.log(data.value);
 		  
 		try {
 			const response = await $fetch(getUrl);

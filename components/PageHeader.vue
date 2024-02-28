@@ -8,7 +8,7 @@
                     </NuxtLink>
                </nav>
                <div>
-                    Hello, {{ (data?.user as any).username }}
+                    Hello, {{ (data?.user as any).name || (data?.user as any).name }}
                     <el-button class=" ml-auto" type="warning" @click="logOut">Log out</el-button>
                </div>
           </header>
@@ -30,6 +30,9 @@ const links = [
 ];
 
 const { data, signOut } = useAuth();
+
+console.log('Data', data.value?.user);
+
 
 const logOut = async() => {
   await signOut();

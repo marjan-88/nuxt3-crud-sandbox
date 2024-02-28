@@ -1,5 +1,7 @@
 import { NuxtAuthHandler } from "#auth";
 import CredentialsProvider from "next-auth/providers/credentials";
+import GoogleProvider from "next-auth/providers/google";
+import GithubProvider from 'next-auth/providers/github'
 import { User } from "~/server/models/User";
 import bcrypt from "bcrypt";
 
@@ -7,18 +9,23 @@ export default NuxtAuthHandler({
   secret: useRuntimeConfig().authSecret,
 
   pages: {
-    signIn: "/login",
+    signIn: "/register",
   },
 
   providers: [
-    // @ts-expect-error
+   
+    // GoogleProvider.default({
+    //   clientId: useRuntimeConfig().googleId,
+    //   clientSecret: useRuntimeConfig().googleSecret,      
+    // }),
+
+     // @ts-expect-error
     CredentialsProvider.default({
       name: "credentials",
       credentials: {},
-      async authorize(credentials: { username: string; password: string }) {
-        // TODO: Fetch user from database
+      async authorize(credentials: { name: string; password: string }) {
 
-        const user = await User.findOne({ username: credentials.username });
+        const user = await User.findOne({ name: credentials.name });
 
         if (!user) {
           throw createError({

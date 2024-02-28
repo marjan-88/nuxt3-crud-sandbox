@@ -2,31 +2,35 @@ import bcrypt from "bcrypt";
 
 export default defineEventHandler(async (event) => {
 
-	const body = await readBody(event);
-     let statusCode;
+	// const body = await readBody(event);
 
-	if (!body.email || !body.username || !body.password) {
+	const { name, email, password } = await readBody(event);
+
+	let statusCode;	
+
+
+	if (!email || !name || !password) {
 		throw createError({
 			statusCode: 400,
 			statusMessage: "Bad request",
 			message: "Missing required fields",
 		});
 	}
-
      const existingUser = await User.findOne({
-          $or: [{ email: body.email }, { username: body.username }]
+          $or: [{ email: email }, { name: name }]
       });
   
       if (existingUser) {
           throw createError({
               statusCode: 409,
-              statusMessage: "User with the provided email or username already exists",
+              statusMessage: "User with the provided email or name already exists",
           });
       }
 
 	const salt = await bcrypt.genSalt(10);
-	const hashedPassword = await bcrypt.hash(body.password, salt);
+	const hashedPassword = await bcrypt.hash(password, salt);
 
-	const newUser = await User.create({ ...body, password: hashedPassword });
+	const newUser = await User.create({ name, email, password: hashedPassword });
+	
 	return { ...newUser.toObject(), password: undefined, statusCode};
 });

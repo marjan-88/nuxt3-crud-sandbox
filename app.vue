@@ -28,6 +28,10 @@ useHead({
     class: 'c-app'
   },
 })
+//TODO: ADD GOOGLE LOGIN
+//TODO: ADD FILTER TO MAP
+//TODO: ADD COPY LATLANG ON MAPCLICK
+//TODO: ADD FAVORITES PER USER
 
 </script>
 <style lang="scss">

@@ -11,21 +11,31 @@
                  </div>               
 
                  <el-form ref="loginFormRef" @submit.prevent :model="loginForm" :rules="rules" class="loginForm">
-                      <el-form-item prop="username">
-                           <el-input placeholder="Username" v-model="loginForm.username" />
+                      <el-form-item prop="name">
+                           <el-input placeholder="Name" v-model="loginForm.name" />
                       </el-form-item>
 
                       <el-form-item prop="password">
                            <el-input v-model="loginForm.password" placeholder="Password" type="password"
                                 autocomplete="off" :show-password="true" />
                       </el-form-item>
-
+                      
+                      
+                      
                       <el-form-item>
-                           <el-button :disabled="isLoading || !allFieldsFilled" :loading="isLoading" class="mt-4 mx-auto"
-                                native-type="button" type="primary" @click="submitForm(loginFormRef)">Confirm
-                           </el-button>
-                      </el-form-item>
-                 </el-form>
+                           <el-button :disabled="isLoading || !allFieldsFilled" :loading="isLoading" class="my-4 mx-auto"
+                           native-type="button" type="primary" @click="submitForm(loginFormRef)">Confirm
+                         </el-button>
+                    </el-form-item>
+
+                    <!-- <p class="my-4 text-center">Or continue in with:</p>
+                      <div class="flex justify-center">
+                         <el-button class="p-4" @click="submitSocial('google')">
+                              <img style="max-width: 21px;" :src="googleIcon" alt="Google Icon" />
+                         </el-button>                     
+                    </div> -->
+
+               </el-form>
             </div>
        </div>
 
@@ -34,6 +44,8 @@
 
 <script lang="ts" setup>
 import type { FormInstance, FormRules } from 'element-plus';
+import googleIcon from "~/assets/icons/google_IC.png";
+import githubIcon from "~/assets/icons/github_IC.png";
 const { signIn, data } = useAuth();
 
 definePageMeta({
@@ -66,11 +78,11 @@ const validatePass = (rule: any, value: any, callback: any) => {
   }
 };
 const loginForm = reactive({
-  username: '',
+  name: '',
   password: '',
 });
 const rules = reactive<FormRules<typeof loginForm>>({
-  username: [{ validator: checkName, trigger: 'blur' }],
+  name: [{ validator: checkName, trigger: 'blur' }],
   password: [{ validator: validatePass, trigger: 'blur' }],
 });
 
@@ -97,5 +109,9 @@ function submitForm(formEl: FormInstance | undefined) {
             return;
        }
   })
+}
+async function submitSocial(action: string){
+     // TBC
+     // await signIn(action, { redirect: false });
 }
 </script>
