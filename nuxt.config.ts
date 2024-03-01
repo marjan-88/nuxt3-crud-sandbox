@@ -26,8 +26,8 @@ export default defineNuxtConfig({
         "@nuxtjs/tailwindcss",
         "nuxt-mongoose",
         "@sidebase/nuxt-auth",
-        'nuxt3-leaflet',
         '@formkit/auto-animate/nuxt',
+		'nuxt3-leaflet',
         '@vueuse/nuxt',
         "@nuxt/image"
     ],

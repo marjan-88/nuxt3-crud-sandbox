@@ -1,7 +1,6 @@
 
 <template>
      <div class="h-full wrapper-primary ">
-
           <div class="flex flex-col p-2 h-full wrapper-primary" v-if="!isLoading">
                <div v-if="mapPoints.length <= 0">
                     <h2>No content found</h2>

@@ -13,4 +13,5 @@ export interface MapPoint {
 	isFavorite?: boolean;
 	createdAt?: Date; 
 	updatedAt?: Date; 
+	createdBy? : string;
 }

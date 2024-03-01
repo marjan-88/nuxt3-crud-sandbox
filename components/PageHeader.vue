@@ -1,6 +1,6 @@
 <template>
      <div class="wrapper-primary">
-          <header  class="flex justify-between p-4 ">
+          <header  class="flex justify-between p-4 text-lg">
                <nav>
                     <NuxtLink v-for="link in links" :key="link.to" :to="link.to" class="mr-2"
                          :class="{ 'active': isActive(link.to) }">
@@ -8,8 +8,9 @@
                     </NuxtLink>
                </nav>
                <div>
-                    Hello, {{ (data?.user as any).name || (data?.user as any).name }}
-                    <el-button class=" ml-auto" type="warning" @click="logOut">Log out</el-button>
+                    <span class="mr-4">Hello, { {{ (data?.user as any).name }} }</span>
+                    
+                    <el-button class="ml-auto text-lg" type="primary"  @click="logOut">Log out</el-button>
                </div>
           </header>
      </div>
@@ -41,7 +42,7 @@ const logOut = async() => {
    
 <style scoped lang="scss">
 .active {
-     color: $orange;
+     color: $blue;
 }
 </style>
    
