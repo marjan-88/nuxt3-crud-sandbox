@@ -37,8 +37,8 @@
                </el-form-item>
 
           </el-form>
-          <el-form-item>
-               <el-button type="primary" @click="submitForm(formDialogRef)">Create and add Point</el-button>
+          <el-form-item class="remove-mb">
+               <el-button  type="primary" @click="submitForm(formDialogRef, 'test')">Create and add Point</el-button>
           </el-form-item>
      </div>
 </template>
@@ -48,7 +48,7 @@ import type { FormInstance, FormRules } from 'element-plus';
 import { useMapPointsStore } from '~/stores/MapPointsStore';
 import type { CheckboxValueType, FormProps } from 'element-plus';
 const labelPosition = ref<FormProps['labelPosition']>('top')
-
+const { data } = useAuth();
 import { isVisible } from 'element-plus/es/utils';
 defineProps<{
      dialogVisible: boolean;
@@ -140,9 +140,12 @@ const rules = reactive<FormRules<RuleForm>>({
      ],
 
 })
+// const userID = computed(() => data.value?.user? ?? undefined);
+// console.log('user', userID.value);
 
-const submitForm = async (formEl: FormInstance | undefined) => {
+const submitForm = async (formEl: FormInstance | undefined, userID: string | undefined) => {
      if (!formEl) return
+    
      await formEl.validate(async(valid, fields) => {
           if (valid) {
                try {
@@ -155,6 +158,7 @@ const submitForm = async (formEl: FormInstance | undefined) => {
                          url: form.url,
                          img: form.img,
                          content: form.content,
+                         createdBy: userID
                     };
                     await mapPointsStore.addPoint(newPoint);
                     emit('form-submitted');

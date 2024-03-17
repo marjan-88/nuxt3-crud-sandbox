@@ -2,7 +2,7 @@
      <client-only>
           <el-dialog 
                ref="mDialog"
-               class="m-dialog"
+               class="m-dialog rounded-md "
                align-center
                v-model="isVisible" 
                :title="title"                
@@ -16,7 +16,7 @@
                     <div v-if="isForm">
                          <el-button @click="isVisible = false">Cancel</el-button>
                     </div>
-                    <div v-else class="dialog-footer" >
+                    <div v-else class="dialog-footer " >
                          <el-button @click="isVisible = false">Cancel</el-button>
                          <el-button type="primary" @click="isVisible = false">
                               Confirm
@@ -74,11 +74,15 @@ const handleClose = (done: () => void) => {
      
 </script>
 <style lang="scss">
+.el-dialog__footer {
+     padding-top: 0;
+}
 .dialog-footer button:first-child {
      margin-right: 10px;
 }
 .m-dialog {
      width: 90%;
+     padding: 1.5rem;
      @media(min-width: $sm){
           width: 80%;
      }

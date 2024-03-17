@@ -1,14 +1,21 @@
 <template>
      <div class="wrapper-primary">
-          <header  class="flex justify-between p-4 text-lg">
-               <nav>
-                    <NuxtLink v-for="link in links" :key="link.to" :to="link.to" class="mr-2"
+          <header  class="flex justify-between py-6 text-lg">
+               <nav class="px-2">
+                    <NuxtLink v-for="link in links" :key="link.to" :to="link.to" class="mr-4"
                          :class="{ 'active': isActive(link.to) }">
                          {{ link.label }}
                     </NuxtLink>
                </nav>
-               <div>
-                    <span class="mr-4">Hello, { {{ (data?.user as any).name }} }</span>
+               <div class="flex content-center">
+                    <span class="mr-4 flex items-center">
+                         <el-icon class="mx-2">
+                              <ElIconUser />
+                         </el-icon>
+                         <span>
+                              { {{ (data?.user as any).name }} }               
+                         </span>
+                    </span>
                     
                     <el-button class="ml-auto text-lg" type="primary"  @click="logOut">Log out</el-button>
                </div>

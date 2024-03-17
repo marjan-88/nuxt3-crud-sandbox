@@ -1,25 +1,27 @@
 
 <template>
-     <div class="h-full wrapper-primary ">
-          <div class="flex flex-col p-2 h-full wrapper-primary" v-if="!isLoading">
+     <div class="h-full wrapper-medium ">
+          <div class="flex flex-col p-2 h-full mb-8 " v-if="!isLoading">
                <div v-if="mapPoints.length <= 0">
                     <h2>No content found</h2>
                </div>
                <div v-else>
                     <div>
-                         <div class="card-header">
-                              <h2 class="font-semibold mb-4">List of points: <span>{{ originalMapPointsLength }}</span></h2>
-                         </div>
-                         <div class="flex gap-4 items-center justify-between  mb-4">
-                              <el-button type="primary" class="w-max " @click="dialogVisible = true">
-                                   Add point
-                                   <el-icon class="ml-2">
-                                        <ElIconPlus />
-                                   </el-icon>
-                              </el-button>
-                              <el-input v-model="searchInput" class="" placeholder="Search" clearable @input="handlePointsFilter"
-                                   :prefix-icon="Search" />
-
+                         <div class="mb-8">                              
+                              <div class="card-header mb-4">
+                                   <h2 class="font-semibold ">List of points: <span>{{ originalMapPointsLength }}</span></h2>
+                              </div>
+                              <div class="flex gap-4 items-center justify-between  mb-4">
+                                   <el-button type="primary" class="w-max " @click="dialogVisible = true">
+                                        Add point
+                                        <el-icon class="ml-2">
+                                             <ElIconPlus />
+                                        </el-icon>
+                                   </el-button>
+                                   <el-input v-model="searchInput" class="" placeholder="Search" clearable @input="handlePointsFilter"
+                                        :prefix-icon="Search" />
+     
+                              </div>
                          </div>
                          <ul class="grid grid-cols-1 divide-y bg-white rounded-md shadow-md" v-auto-animate>
                               <li v-for="marker in filteredMapPoints" :key="marker._id?.toString()"

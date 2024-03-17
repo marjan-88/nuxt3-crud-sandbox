@@ -1,14 +1,14 @@
 <template>
-     <div class="wrapper-primary">
-          <el-page-header class="mb-4" @back="$router.back()">
+     <div class="wrapper-medium">
+          <el-page-header class="my-8" @back="$router.back()">
                <template #content>
-                    <span class="text-large font-600 mr-3"> Map - point details </span>
+                    <span class="text-large font-600 "> Map - point details </span>
                </template>
           </el-page-header>
           <div class="p-2 bg-white rounded-md shadow-md" v-if="!isLoading">
                <h2 class="p-2" v-if="mapPoint === undefined || null">No content found</h2>
                <div v-else>
-                    <div class="flex flex-col gap-y-4 p-2">
+                    <div class="flex flex-col gap-y-4 p-6">
                          <p>Name: {{ mapPoint?.name }}</p>
                          <p>Name: {{ mapPoint?.city }}</p>
                          <p>Latitude: {{ mapPoint?.lat }}</p>
@@ -19,8 +19,8 @@
                          <p>Created At: {{ mapPoint?.createdAt }}</p>
                          <p>Updated At: {{ mapPoint?.updatedAt }}</p>
                     </div>
-                    <div class="p-2">
-                         <el-button class="w-max mt-4" type="danger" @click="onDelete">
+                    <div class="p-6">
+                         <el-button class="w-max" type="danger" @click="onDelete">
                               Delete point
                               <el-icon class="ml-2">
                                    <ElIconDelete />
