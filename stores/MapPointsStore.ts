@@ -3,7 +3,7 @@ import type { MapPoint } from "~/types/MapPoint";
 const getUrl = "/api/points/get";
 const postUrl = "/api/points/post";
 const deleteUrl = "/api/points/delete";
-// const deleteEndpoint = `/api/points/${pointId}`;
+const editUrl = "/api/points/patch";
 
 export const useMapPointsStore = defineStore("mapPoints", () => {
 	const pointsRef = ref(<MapPoint[]>[]);
@@ -11,13 +11,7 @@ export const useMapPointsStore = defineStore("mapPoints", () => {
 	const mapPoints = computed(() => pointsRef.value);
 	let isLoading = ref(true);
 
-	const fetchPoints = async () => {
-
-		const { data, pending, error, refresh } = await useAsyncData(
-			'points',
-			() => $fetch(getUrl)
-		  )
-		//   console.log(data.value);
+	const fetchPoints = async () => {	
 		  
 		try {
 			const response = await $fetch(getUrl);
@@ -49,7 +43,7 @@ export const useMapPointsStore = defineStore("mapPoints", () => {
 					showClose: false,
 					type: "success",
 				});
-				// You might want to fetch the updated points after adding a new one
+				// Fetch the updated points after adding a new one
 				await fetchPoints();
 			} else {
 				console.error("Failed to add point:", response.body);
@@ -102,5 +96,40 @@ export const useMapPointsStore = defineStore("mapPoints", () => {
 		}
 	};
 
-	return { mapPoints, count, isLoading, fetchPoints, addPoint, removePoint };
+	const editPoint = async (pointId: string, updatedPointData: Partial<MapPoint>) => {
+        try {
+            const patchResponse = await $fetch(`${editUrl}/${pointId}`, {
+                method: "PATCH",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(updatedPointData),
+            });
+
+            if (patchResponse.statusCode === 200) {
+                ElNotification.success({
+                    title: "Info",
+                    message: "Point updated successfully",
+                    showClose: false,
+                    type: "success",
+                });
+                await fetchPoints();
+            } else {
+                console.error("Failed to update point:", patchResponse.body);
+            }
+        } catch (error) {
+            console.error("Error updating point:", error);
+            throw new Error("Something went wrong");
+        }
+    };
+
+	return { 
+		mapPoints, 
+		count, 
+		isLoading, 
+		fetchPoints, 
+		addPoint, 
+		removePoint, 
+		editPoint 
+	};
 });

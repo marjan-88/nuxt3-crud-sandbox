@@ -33,6 +33,7 @@
    
 <script lang="ts" setup>
 import { ElMessageBox } from 'element-plus'
+import type { MapPoint } from '~/types/MapPoint';
 
 const mDialog = ref('mDialog');
 

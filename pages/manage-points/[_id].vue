@@ -24,8 +24,14 @@
                               Delete point
                               <el-icon class="ml-2">
                                    <ElIconDelete />
-                              </el-icon> </el-button>
-
+                              </el-icon>
+                         </el-button>
+                         <el-button class="w-max" type="success" @click="onEdit">
+                              Edit point
+                              <el-icon class="ml-2">
+                                   <ElIconEdit />
+                              </el-icon>
+                         </el-button>
                     </div>
 
                </div>
@@ -33,10 +39,15 @@
           <div v-else>
                <LoadingSpinner />
           </div>
+          <ModalPrimary  title="Edit Point" :isForm="true" v-model:isVisible="dialogVisible">              
+               <EditPointForm :editedPoint="mapPoint!"  @form-submitted="onCancel"/>
+          </ModalPrimary>
+          
      </div>
 </template>
 
 <script setup lang="ts">
+import type { MapPoint } from '~/types/MapPoint';
 import { computed } from 'vue';
 import { useMapPointsStore } from '~/stores/MapPointsStore';
 const route = useRoute();
@@ -44,21 +55,28 @@ const router = useRouter();
 const mapPointsStore = useMapPointsStore();
 const { mapPoints, isLoading } = storeToRefs(mapPointsStore);
 const point_ID = route.params._id;
+// const isEditing = ref<boolean>(false);
+let dialogVisible = ref(false);//trigger visibility
+const onCancel = () => {
+     dialogVisible.value = false;
+}
 
 const mapPoint = computed(() => {
      return mapPoints.value.find(point => point?._id?.toString() === point_ID);
 });
-
+console.log('Parent mapPoint', mapPoint);
+// const pointInfo = mapPoint.value ?? null;
+// console.log('mapPoint !!!', pointInfo);
 
 const onDelete = () => {
      const pointToDelete = mapPoints.value.find(point => point?._id?.toString() === point_ID);
-     if (pointToDelete ) {
+     if (pointToDelete) {
           ElMessageBox.confirm('Are you sure to delete this point permanently?')
-               .then(() => {               
-                    const idToDelete = pointToDelete._id!.toString(); 
+               .then(() => {
+                    const idToDelete = pointToDelete._id!.toString();
                     if (idToDelete) {
-                         mapPointsStore.removePoint(idToDelete);              
-                         router.push('/map');          
+                         mapPointsStore.removePoint(idToDelete);
+                         router.push('/map');
                     }
                })
                .catch(() => {
@@ -66,9 +84,16 @@ const onDelete = () => {
                });
      }
 };
+const onEdit = () => {
+     const pointToEdit = mapPoints.value.find(point => point?._id?.toString() === point_ID);
+     if (pointToEdit) {
+          dialogVisible.value = true;      
+          // 
+     }
+
+}
 
 
 </script>
 
-<style scoped>
-</style>
+<style scoped></style>
