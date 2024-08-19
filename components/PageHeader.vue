@@ -43,7 +43,9 @@ console.log('Data', data.value?.user);
 
 
 const logOut = async() => {
-  await signOut();
+  await signOut({ redirect: false });
+  navigateTo('/authPages/loggedOut');
+
 }
 </script>
    

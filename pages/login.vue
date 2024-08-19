@@ -19,8 +19,7 @@
                            <el-input v-model="loginForm.password" placeholder="Password" type="password"
                                 autocomplete="off" :show-password="true" />
                       </el-form-item>
-                      
-                      
+                                           
                       
                       <el-form-item>
                            <el-button :disabled="isLoading || !allFieldsFilled" :loading="isLoading" class="my-4 mx-auto"
@@ -28,12 +27,7 @@
                          </el-button>
                     </el-form-item>
 
-                    <!-- <p class="my-4 text-center">Or continue in with:</p>
-                      <div class="flex justify-center">
-                         <el-button class="p-4" @click="submitSocial('google')">
-                              <img style="max-width: 21px;" :src="googleIcon" alt="Google Icon" />
-                         </el-button>                     
-                    </div> -->
+                  
 
                </el-form>
             </div>
@@ -44,9 +38,9 @@
 
 <script lang="ts" setup>
 import type { FormInstance, FormRules } from 'element-plus';
-import googleIcon from "~/assets/icons/google_IC.png";
-import githubIcon from "~/assets/icons/github_IC.png";
-const { signIn, data } = useAuth();
+// import googleIcon from "~/assets/icons/google_IC.png";
+// import githubIcon from "~/assets/icons/github_IC.png";
+const { signIn, data, status } = useAuth();
 
 definePageMeta({
   middleware: "guest",
@@ -94,14 +88,13 @@ function submitForm(formEl: FormInstance | undefined) {
             isLoading.value = true;
             try {
                  const res = await signIn('credentials', loginForm);
-                 console.log(res);
+               //   console.log(res);
                  useRouter().push({
                       name: "index",
                  });
                  isLoading.value = false;
             } catch (error) {
                  console.log(error);
-
             }
 
        } else {
@@ -109,9 +102,5 @@ function submitForm(formEl: FormInstance | undefined) {
             return;
        }
   })
-}
-async function submitSocial(action: string){
-     // TBC
-     // await signIn(action, { redirect: false });
 }
 </script>

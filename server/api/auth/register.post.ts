@@ -1,5 +1,5 @@
 import bcrypt from "bcrypt";
-
+// import { google } from 'googleapis';
 export default defineEventHandler(async (event) => {
 
 	// const body = await readBody(event);
@@ -7,7 +7,6 @@ export default defineEventHandler(async (event) => {
 	const { name, email, password } = await readBody(event);
 
 	let statusCode;	
-
 
 	if (!email || !name || !password) {
 		throw createError({
@@ -29,7 +28,6 @@ export default defineEventHandler(async (event) => {
 
 	const salt = await bcrypt.genSalt(10);
 	const hashedPassword = await bcrypt.hash(password, salt);
-
 	const newUser = await User.create({ name, email, password: hashedPassword });
 	
 	return { ...newUser.toObject(), password: undefined, statusCode};

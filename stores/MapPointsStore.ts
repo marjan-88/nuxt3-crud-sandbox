@@ -15,13 +15,11 @@ export const useMapPointsStore = defineStore("mapPoints", () => {
 		  
 		try {
 			const response = await $fetch(getUrl);
-			// console.log(response.body, 'my store');
 			pointsRef.value = response.body as MapPoint[];
 		} catch (error) {
 			throw new Error("Something went wrong");
 		} finally {
 			isLoading.value = false;
-			// console.log('finally fetched');
 		}
 	};
 
@@ -43,7 +41,6 @@ export const useMapPointsStore = defineStore("mapPoints", () => {
 					showClose: false,
 					type: "success",
 				});
-				// Fetch the updated points after adding a new one
 				await fetchPoints();
 			} else {
 				console.error("Failed to add point:", response.body);

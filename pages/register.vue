@@ -33,26 +33,28 @@
 
                          </el-form-item>
 
-                         <!-- <p class="my-4 text-center">Or register with:</p>
+                         <p class="mt-8 mb-4 text-center font-bold">Or go with:</p>
                          <div class="flex justify-center">
-                              <el-button class="p-4" @click="submitSocial('google')">
+                              <el-button class="p-6" @click="submitSocial('google')">
                                    <img style="max-width: 21px;" :src="googleIcon" alt="Google Icon" />
                               </el-button>
-                         </div> -->
+                         </div>
                     </el-form>
                </div>
 
           </div>
 
-     </section>
+     </section> 
 </template>
 
 <script lang="ts" setup>
 import { reactive, ref } from 'vue'
 import type { FormInstance, FormRules } from 'element-plus'
-// import googleIcon from "~/assets/icons/google_IC.png";
+import googleIcon from "~/assets/icons/google_IC.png";
 // import githubIcon from "~/assets/icons/github_IC.png";
-const { signIn, data } = useAuth();
+
+const { signIn, data, status, getProviders } = useAuth();
+const providers = await getProviders();
 
 const isLoading = ref(false);
 const registerFormRef = ref<FormInstance>();
@@ -138,9 +140,9 @@ const submitForm = (formEl: FormInstance | undefined) => {
                     const data = await $fetch("/api/auth/register", {
                          method: "POST",
                          body: {
-                              name : registerForm.name,
-                              email : registerForm.email,
-                              password : registerForm.password,
+                              name: registerForm.name,
+                              email: registerForm.email,
+                              password: registerForm.password,
                          },
                          server: false
                     });
@@ -183,15 +185,24 @@ const submitForm = (formEl: FormInstance | undefined) => {
           }
      })
 };
-async function submitSocial(action: string) {
-// TBC
-//      try { 
-//         await signIn(action);  
-//     } catch (error) {
-//         console.error("Error during social authentication:", error);
-//     }
-}
 
+
+
+const submitSocial = async (action: string) => {
+     try {
+          await signIn(action, { callbackUrl: '/' });      
+
+     } catch (error) {
+          console.error("Error during social authentication:", error);
+          
+          ElNotification({
+               title: 'Error',
+               message: 'Something went wrong',
+               type: 'error',
+          });
+     }
+
+}
 
 
 </script>

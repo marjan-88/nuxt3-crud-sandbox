@@ -4,13 +4,13 @@ export default defineNuxtConfig({
 		enabled: true,
 	},
 	app: {
-		  pageTransition: { name: 'page', mode: 'out-in' },
+		pageTransition: { name: "page", mode: "out-in" },
 	},
 	runtimeConfig: {
-		authSecret: process.env.AUTH_SECRET,	
+		authSecret: process.env.AUTH_SECRET,
 		googleId: process.env.NUXT_GOOGLE_ID,
 		googleSecret: process.env.NUXT_GOOGLE_SECRET,
-	},	
+	},
 	vite: {
 		css: {
 			preprocessorOptions: {
@@ -21,16 +21,16 @@ export default defineNuxtConfig({
 		},
 	},
 	modules: [
-        "@pinia/nuxt",
-        "@element-plus/nuxt",
-        "@nuxtjs/tailwindcss",
-        "nuxt-mongoose",
-        "@sidebase/nuxt-auth",
-        '@formkit/auto-animate/nuxt',
-		'nuxt3-leaflet',
-        '@vueuse/nuxt',
-        "@nuxt/image"
-    ],
+		"@pinia/nuxt",
+		"@element-plus/nuxt",
+		"@nuxtjs/tailwindcss",
+		"nuxt-mongoose",
+		"@sidebase/nuxt-auth",
+		"@formkit/auto-animate/nuxt",
+		"nuxt3-leaflet",
+		"@vueuse/nuxt",
+		"@nuxt/image",
+	],	
 	mongoose: {
 		uri: process.env.MONGODB_URI,
 		modelsDir: "models",

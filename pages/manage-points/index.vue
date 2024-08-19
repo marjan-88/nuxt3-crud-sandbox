@@ -74,6 +74,7 @@ const handlePointsFilter = useDebounceFn(() => {
     });
 }, 500);
 
+console.log(mapPointsStore.mapPoints);
 
 const dialogVisible = ref(false);//trigger visibility
 const onCancel = () => {
@@ -92,7 +93,8 @@ watch(mapPoints, (newMapPoints, oldMapPoints) => {
     if (newMapPoints.length > oldMapPoints.length) {
         // Update filteredMapPoints with the new mapPoints
         filteredMapPoints.value = newMapPoints;
-    }
+        console.log('new mappoints', newMapPoints);
+    } 
 });
 
 
