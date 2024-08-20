@@ -1,16 +1,15 @@
 <template>
     <!-- <div title="Add Point" :isVisible="dialogVisible" :isForm="true"> -->
-    <div title="Edit Point"  :isForm="true">
+    <div title="Edit Point"   :isForm="true">
          <el-form :label-position="labelPosition" ref="formDialogRef" :rules="rules" :model="form" label-width="auto"
-              class="flex flex-row gap-3  flex-wrap" status-icon>
-
+              class="flex flex-col gap-3 " status-icon>     
               <el-form-item label="Name" class="basis-full" prop="name">
                    <el-input v-model="form.name"  />
               </el-form-item>
               <el-form-item label="City" class="basis-full" prop="city">
                    <el-input v-model="form.city"  />
               </el-form-item>
-              <el-form-item label="Category" class="basis-full md:basis-1/1" prop="category" >
+              <el-form-item label="Category" class="basis-full " prop="category" >
                    <el-select v-model="form.category" multiple clearable collapse-tags 
                         popper-class="custom-header" :max-collapse-tags="2" >
                         <template #header>
@@ -21,12 +20,15 @@
                         <el-option v-for="item in categories" :key="item.value" :value="item.value" />
                    </el-select>
               </el-form-item>
-              <el-form-item label="Lat" class="basis-full md:basis-1/4" prop="lat">
-                   <el-input v-model.number="form.lat" type="text" />
-              </el-form-item>
-              <el-form-item label="Lng" class="basis-full md:basis-1/4" prop="lng">
-                   <el-input v-model.number="form.lng" type="text" />
-              </el-form-item>
+              <div class="flex flex-row flex-wrap md:flex-nowrap gap-3 basis-full">
+               <el-form-item label="Lat" class="basis-full md:basis-1/2" prop="lat">
+                    <el-input v-model.number="form.lat" type="text" />
+               </el-form-item>
+               <el-form-item label="Lng" class="basis-full md:basis-1/2" prop="lng">
+                    <el-input v-model.number="form.lng" type="text" />
+               </el-form-item>
+              </div>
+
               <el-form-item label="Url" class="basis-full" prop="url">
                    <el-input v-model="form.url"/>
               </el-form-item>
@@ -101,7 +103,7 @@ const form = reactive<RuleForm>({
 const rules = reactive<FormRules<RuleForm>>({
     name: [
          { required: true, message: 'Please enter name', trigger: 'blur' },
-         { min: 3, max: 15, message: 'Length should be 3 to 15', trigger: 'blur' },
+         { min: 3, max: 35, message: 'Length should be 3 to 15', trigger: 'blur' },
     ],
     city: [
          { required: true, message: 'Please enter city', trigger: 'blur' },

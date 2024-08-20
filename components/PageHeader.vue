@@ -39,7 +39,7 @@ const links = [
 
 const { data, signOut } = useAuth();
 
-console.log('Data', data.value?.user);
+// console.log('Data', data.value?.user);
 
 
 const logOut = async() => {

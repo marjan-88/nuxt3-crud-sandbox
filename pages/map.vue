@@ -18,18 +18,14 @@
                          </ul>
                     </div>
                </aside>
-               <div class="map">
-                    <LMap ref="mapRef" @mouseup.middle="showTooltip" :zoom="zoom" :center="mapCenter" >
+               <div class="map"  >
+                    <LMap  ref="mapRef" @mouseup.middle="showTooltip" :zoom="zoom"
+                         :center="mapCenter">
                          <LTileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                               attribution="&amp;copy; <a href=&quot;https://www.openstreetmap.org/&quot;>OpenStreetMap</a> contributors"
                               layer-type="base" name="OpenStreetMap" />
-                         <LMarker 
-                              @click="handleListHighlight" 
-                              ref="markerRef" 
-                              v-for="(points, key) in groupedMapPoints" 
-                              :key="key"
-                              :lat-lng="points[0]"
-                              >
+                         <LMarker @click="handleListHighlight" ref="markerRef" v-for="(points, key) in groupedMapPoints"
+                              :key="key" :lat-lng="points[0]">
                               <LPopup ref="popupRef">
                                    <div v-for="point in points" :key="point._id?.toString()">
                                         <NuxtLink :to="`/manage-points/${point._id}`">
@@ -51,7 +47,7 @@ import { useMapPointsStore } from '~/stores/MapPointsStore';
 import type { MapPoint } from '~/types/MapPoint';
 import "leaflet/dist/leaflet.css";
 import type { LMap, LMarker, LPopup } from '@vue-leaflet/vue-leaflet';
-import { useClipboard } from '@vueuse/core'; 
+import { useClipboard } from '@vueuse/core';
 
 definePageMeta({
      middleware: 'auth'
@@ -85,72 +81,72 @@ const groupedMapPoints = computed(() => {
 
 const { copy } = useClipboard();
 
-const showTooltip = (e:any) => {
-  if (e.originalEvent && e.originalEvent.button === 1) {
-    const coordinates = `${e.latlng.lat} ${e.latlng.lng}`;
-    copy(coordinates); // Copy coordinates to clipboard
+const showTooltip = (e: any) => {
+     if (e.originalEvent && e.originalEvent.button === 1) {
+          const coordinates = `${e.latlng.lat} ${e.latlng.lng}`;
+          copy(coordinates); // Copy coordinates to clipboard
 
-    ElMessageBox.confirm(
-    `${coordinates}`,
-    'Coordinates',
-    {
-      confirmButtonText: 'Copy to clipboard',
-      cancelButtonText: 'Cancel',
-      center: true,
-    }
-  )
-    .then(() => {
-      ElMessage({
-        type: 'success',
-        message: 'Copy to clipboard completed',
-      })
-    })
-    .catch(() => {
-      ElMessage({
-        type: 'info',
-        message: 'Aborted',
-      })
-    })  }
+          ElMessageBox.confirm(
+               `${coordinates}`,
+               'Coordinates',
+               {
+                    confirmButtonText: 'Copy to clipboard',
+                    cancelButtonText: 'Cancel',
+                    center: true,
+               }
+          )
+               .then(() => {
+                    ElMessage({
+                         type: 'success',
+                         message: 'Copy to clipboard completed',
+                    })
+               })
+               .catch(() => {
+                    ElMessage({
+                         type: 'info',
+                         message: 'Aborted',
+                    })
+               })
+     }
 };
 
 let highlightedListItem = ref<MapPoint | null>(null);
 
 const highlightMarker = (marker: MapPoint) => {
-    const newZoom = 8;
-    const newCenter = ref<[number, number]>([marker.lat, marker.lng]);
-    nextTick(() => {
-        mapRef.value?.leafletObject?.setView(newCenter.value, newZoom); // Set new zoom level and center
-    })
+     const newZoom = 8;
+     const newCenter = ref<[number, number]>([marker.lat, marker.lng]);
+     nextTick(() => {
+          mapRef.value?.leafletObject?.setView(newCenter.value, newZoom); // Set new zoom level and center
+     })
 
-    const foundMarker = markerRef.value?.find((item) => {
-        return item.leafletObject?.getLatLng().equals([marker.lat, marker.lng]);
-    });
-    const foundMarkerCoords = foundMarker?.leafletObject?.getLatLng();
-    const popup = foundMarker?.leafletObject?.getPopup();
+     const foundMarker = markerRef.value?.find((item) => {
+          return item.leafletObject?.getLatLng().equals([marker.lat, marker.lng]);
+     });
+     const foundMarkerCoords = foundMarker?.leafletObject?.getLatLng();
+     const popup = foundMarker?.leafletObject?.getPopup();
 
-    if (popup && foundMarker && foundMarkerCoords) {
-        popup?.setLatLng(foundMarkerCoords);
-        mapRef.value?.leafletObject?.openPopup(popup);
-    }
-    highlightedListItem.value = marker; // Set the highlighted marker
+     if (popup && foundMarker && foundMarkerCoords) {
+          popup?.setLatLng(foundMarkerCoords);
+          mapRef.value?.leafletObject?.openPopup(popup);
+     }
+     highlightedListItem.value = marker; // Set the highlighted marker
 };
 
 const handleListHighlight = (mapMarker: typeof LMarker) => {
      const mapMarkerLat = mapMarker.latlng.lat;
      const mapMarkerLng = mapMarker.latlng.lng;
-     const matchedListElement = mapPoints.value.find(listItem => 
-         listItem.lat === mapMarkerLat && listItem.lng === mapMarkerLng
-     );  
+     const matchedListElement = mapPoints.value.find(listItem =>
+          listItem.lat === mapMarkerLat && listItem.lng === mapMarkerLng
+     );
 
      if (matchedListElement) {
-        highlightedListItem.value = matchedListElement;    
-    }  
-    
+          highlightedListItem.value = matchedListElement;
+     }
+
 };
 
 
 onMounted(() => {
-
      if ("geolocation" in navigator) {
           navigator.geolocation.getCurrentPosition(position => {
                const { latitude, longitude } = position.coords;
@@ -171,7 +167,6 @@ onMounted(() => {
 
 
 <style lang="scss">
-
 .map-holder {
      display: grid;
      grid-template-columns: 20% 80%;
@@ -187,9 +182,11 @@ onMounted(() => {
      width: 100%;
      height: 100%;
 }
+
 .highlight {
-  background-color: $blue; /* Define your highlight color */
-  color: #fff;
-  font-weight: 500;
+     background-color: $blue;
+     /* Define your highlight color */
+     color: #fff;
+     font-weight: 500;
 }
 </style>

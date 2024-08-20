@@ -18,6 +18,7 @@
                          <p>Rating: {{ mapPoint?.rating }}</p>
                          <p>Created At: {{ mapPoint?.createdAt }}</p>
                          <p>Updated At: {{ mapPoint?.updatedAt }}</p>
+                         <p>Point created by: {{ mapPoint?.createdBy }}</p>
                     </div>
                     <div class="p-6">
                          <el-button class="w-max" type="danger" @click="onDelete">
@@ -93,7 +94,7 @@ const onEdit = () => {
 
 }
 
-
+//TODO: add date formatter
 </script>
 
 <style scoped></style>

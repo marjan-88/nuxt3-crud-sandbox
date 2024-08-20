@@ -6,7 +6,6 @@ import bcrypt from "bcrypt";
 import { MongoDBAdapter } from "@auth/mongodb-adapter";
 import mongoose from "mongoose";
 
-
 // Konwertuj mongoose.connection na MongoClient
 const clientPromise = mongoose.connection.getClient();
 export default NuxtAuthHandler({

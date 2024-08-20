@@ -13,6 +13,7 @@ const pointSchema = new Schema({
     isFavorite: { type: Boolean },
     createdAt: { type: Date },
     updatedAt: { type: Date },
+    createdBy: {type: String, required: true}
   },
   { timestamps: true } // Adds createdAt and updatedAt automatically
 );

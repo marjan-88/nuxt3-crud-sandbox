@@ -20,12 +20,20 @@
                          <el-option v-for="item in categories" :key="item.value" :value="item.value" />
                     </el-select>
                </el-form-item>
-               <el-form-item label="Lat" class="basis-full md:basis-1/4" prop="lat">
+               <div class="flex flex-row flex-wrap md:flex-nowrap gap-3 basis-full">
+               <el-form-item label="Lat" class="basis-full md:basis-1/2" prop="lat">
+                    <el-input v-model.number="form.lat" type="text" />
+               </el-form-item>
+               <el-form-item label="Lng" class="basis-full md:basis-1/2" prop="lng">
+                    <el-input v-model.number="form.lng" type="text" />
+               </el-form-item>
+              </div>
+               <!-- <el-form-item label="Lat" class="basis-full md:basis-1/4" prop="lat">
                     <el-input v-model.number="form.lat" type="text" />
                </el-form-item>
                <el-form-item label="Lng" class="basis-full md:basis-1/4" prop="lng">
                     <el-input v-model.number="form.lng" type="text" />
-               </el-form-item>
+               </el-form-item> -->
                <el-form-item label="Url" class="basis-full" prop="url">
                     <el-input v-model="form.url" />
                </el-form-item>
@@ -92,7 +100,7 @@ const form = reactive<RuleForm>({
 const rules = reactive<FormRules<RuleForm>>({
      name: [
           { required: true, message: 'Please enter name', trigger: 'blur' },
-          { min: 3, max: 15, message: 'Length should be 3 to 15', trigger: 'blur' },
+          { min: 3, max: 35, message: 'Length should be 3 to 35', trigger: 'blur' },
      ],
      city: [
           { required: true, message: 'Please enter city', trigger: 'blur' },
@@ -141,14 +149,15 @@ const rules = reactive<FormRules<RuleForm>>({
 
 })
 // const userID = computed(() => data.value?.user? ?? undefined);
-// console.log('user', userID.value);
+// console.log('user', data.value?.user?.name);
 
-const submitForm = async (formEl: FormInstance | undefined, userID: string | undefined) => {
+const submitForm = async (formEl: FormInstance | undefined, userID: string) => {
      if (!formEl) return
     
      await formEl.validate(async(valid, fields) => {
           if (valid) {
                try {
+                    const createdBy = data.value?.user?.name ?? 'Anonymous';
                     const newPoint: MapPoint = {
                          name: form.name,
                          city: form.city,
@@ -158,7 +167,7 @@ const submitForm = async (formEl: FormInstance | undefined, userID: string | und
                          url: form.url,
                          img: form.img,
                          content: form.content,
-                         createdBy: userID
+                         createdBy
                     };
                     await mapPointsStore.addPoint(newPoint);
                     emit('form-submitted');
