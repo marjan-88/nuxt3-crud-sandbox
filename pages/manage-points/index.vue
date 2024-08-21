@@ -12,7 +12,11 @@
                                    <h2 class="font-semibold ">List of points: <span>{{ originalMapPointsLength }}</span></h2>
                               </div>
                               <div class="flex gap-4 items-center justify-between  mb-4">
-                                   <el-button type="primary" class="w-max " @click="dialogVisible = true">
+                                   <el-button 
+                                        type="primary" 
+                                        class="w-max " 
+                                        @click="handleAddPointModal()"
+                                   >                                  
                                         Add point
                                         <el-icon class="ml-2">
                                              <ElIconPlus />
@@ -40,10 +44,14 @@
                <LoadingSpinner />
           </div>
 
-          <ModalPrimary title="Add Point" :isForm="true" v-model:isVisible="dialogVisible" @opened="handleChildDialogOpened">
-               <AddPointForm :dialogVisible="dialogVisible" @form-submitted="onCancel" />
-          </ModalPrimary>
-
+     
+          <!-- <AddPointModal :isVisible="isAddPointModalOpened" @form-submitted="isAddPointModalOpened = false" /> -->
+          <AddPointModal 
+               title="Add Point" 
+               :dialogVisible ="isAddPointModalOpened as boolean"
+               @form-submitted="isAddPointModalOpened = false"
+               @closed="isAddPointModalOpened = false"
+          />
 
      </div>
 </template>
@@ -53,6 +61,7 @@ import { ElButton, ElIcon } from 'element-plus'
 import { storeToRefs } from 'pinia';
 import { useMapPointsStore } from '~/stores/MapPointsStore';
 import { Search } from '@element-plus/icons-vue';
+const isAddPointModalOpened = useState('isAddPointModalOpened');
 
 definePageMeta({
      middleware: 'auth'
@@ -73,19 +82,13 @@ const handlePointsFilter = useDebounceFn(() => {
         return name.includes(searchTerm) || city.includes(searchTerm);
     });
 }, 500);
-
-console.log(mapPointsStore.mapPoints);
-
-const dialogVisible = ref(false);//trigger visibility
-const onCancel = () => {
-     dialogVisible.value = false;
-}
-
-const handleChildDialogOpened = () => {
-     console.log('Child component is opened! - parent');
-}
-
 const originalMapPointsLength = ref(mapPoints.value.length);
+
+const handleAddPointModal = ()=> {
+     return isAddPointModalOpened.value = true
+     console.log('(manage-points.vue) add point btn', isAddPointModalOpened.value );
+}
+
 
 // Watch for changes in mapPoints
 watch(mapPoints, (newMapPoints, oldMapPoints) => {
@@ -93,7 +96,7 @@ watch(mapPoints, (newMapPoints, oldMapPoints) => {
     if (newMapPoints.length > oldMapPoints.length) {
         // Update filteredMapPoints with the new mapPoints
         filteredMapPoints.value = newMapPoints;
-        console.log('new mappoints', newMapPoints);
+     //    console.log('new mappoints', newMapPoints);
     } 
 });
 

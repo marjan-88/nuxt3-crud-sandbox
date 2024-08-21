@@ -12,8 +12,12 @@ import { useMapPointsStore } from '~/stores/MapPointsStore';
 const mapPointsStore = useMapPointsStore();
 const { status } = useAuth();
 const isAuthenticated = computed(() => status.value === 'authenticated' ? true : false);
-console.log('is authenticated ?',isAuthenticated.value);
+// const isAddPointModalOpened = useState<boolean>('isAddPointModalOpened', () => false);
 
+const isAddPointModalOpened = useState<boolean>('isAddPointModalOpened', () => false) as Ref<boolean>;
+
+console.log('(app.vue) User authenticated? --->', isAuthenticated.value);
+console.log('(app.vue) Is add-point-modal state set on true? --->', isAddPointModalOpened.value);
 
 onMounted(() => {
      mapPointsStore.fetchPoints();
@@ -28,9 +32,8 @@ useHead({
     class: 'c-app'
   },
 })
-//TODO: ADD GOOGLE LOGIN
+
 //TODO: ADD FILTER TO MAP
-//TODO: ADD COPY LATLANG ON MAPCLICK
 //TODO: ADD FAVORITES PER USER
 
 </script>
