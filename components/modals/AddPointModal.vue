@@ -4,14 +4,12 @@
                 ref="mDialog" 
                 class="m-dialog rounded-md " 
                 align-center 
-                v-model="isAddPointModalOpened as boolean"
-                :title="title" 
+                v-model="isAddPointModalOpened "                
                 :before-close="handleClose" 
-                :append-to-body="true" 
-              
+                :append-to-body="true"   
+                title="Add Point"            
             >
-
-            <div title="Add Point" >
+            <div>                
                 <!-- <div title="Add Point" dialog  :isForm="true"> -->
                 <el-form :label-position="labelPosition" ref="formDialogRef" :rules="rules" :model="form"
                     label-width="auto" class="flex flex-row gap-3  flex-wrap" status-icon>
@@ -69,7 +67,6 @@
                     </el-button>
                 </div>
             </template>
-
         </el-dialog>
     </client-only>
 </template>
@@ -80,7 +77,8 @@ import { ElMessageBox } from 'element-plus'
 import type { MapPoint } from '~/types/MapPoint';
 import type { FormInstance, FormRules } from 'element-plus';
 import type { CheckboxValueType, FormProps } from 'element-plus';
-const isAddPointModalOpened = useState('isAddPointModalOpened');
+
+const isAddPointModalOpened = useState<boolean>('isAddPointModalOpened');
 const mDialog = ref('mDialog');
 const mapPointsStore = useMapPointsStore();
 const formDialogRef = ref<FormInstance>();
@@ -175,10 +173,10 @@ const emit = defineEmits<{
     (e: 'form-submitted'): void,
 }>();
 
-defineProps<{
-    title: string,
-    dialogVisible : boolean,
-}>()
+// defineProps<{
+//     title: string,
+//     dialogVisible : boolean,
+// }>()
 
 
 const onOpened = () => {

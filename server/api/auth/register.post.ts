@@ -16,13 +16,13 @@ export default defineEventHandler(async (event) => {
 		});
 	}
      const existingUser = await User.findOne({
-          $or: [{ email: email }, { name: name }]
+          $or: [{ email: email }]
       });
   
       if (existingUser) {
           throw createError({
               statusCode: 409,
-              statusMessage: "User with the provided email or name already exists",
+              statusMessage: "User with the provided email already exists",
           });
       }
 

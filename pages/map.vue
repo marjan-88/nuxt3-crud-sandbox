@@ -3,7 +3,7 @@
           <el-button id="quick-add" @click="handleAddPointModal()" class="absolute" type="info" :icon="Plus" circle />
           <div class="map-holder ">
                <aside class="flex flex-col overflow-hidden">
-                    <h3 class="text-lg mx-4 px-2">Map points:</h3>
+                    <h3 class="text-lg mx-4 px-2">Map points: {{ count }}</h3>
                     <div class="map-list p-4 h-full  overflow-auto">
                          <div v-if="isLoading">
                               <LoadingSpinner></LoadingSpinner>
@@ -76,6 +76,7 @@ const markerRef = ref<InstanceType<typeof LMarker>[] | null>(null);
 const popupRef = ref<InstanceType<typeof LPopup>[] | null>(null);
 
 const {
+     count,
      mapPoints,
      isLoading
 } = storeToRefs(mapPointsStore);

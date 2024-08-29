@@ -4,23 +4,22 @@
                ref="mDialog"
                class="m-dialog rounded-md "
                align-center
-               v-model:visible="isAddPointModalOpened" 
+               v-model="isVisible" 
                :title="title"                
                :before-close="handleClose"
                :append-to-body="true"
                @opened="onOpened"
-               @closed="onClosed"
-               
+               @closed="onClosed"               
                >
                <slot></slot>
                <!-- width="w-11/12 md:w-1/2" -->
                <template #footer>
                     <div v-if="isForm">
-                         <el-button @click="isAddPointModalOpened = false">Cancel</el-button>
+                         <el-button @click="isVisible = false">Cancel</el-button>
                     </div>
                     <div v-else class="dialog-footer " >
-                         <el-button @click="isAddPointModalOpened = false">Cancel</el-button>
-                         <el-button type="primary" @click="isAddPointModalOpened = false">
+                         <el-button @click="isVisible = false">Cancel</el-button>
+                         <el-button type="primary" @click="isVisible = false">
                               Confirm
                          </el-button>
 
@@ -36,28 +35,27 @@
 <script lang="ts" setup>
 import { ElMessageBox } from 'element-plus'
 import type { MapPoint } from '~/types/MapPoint';
-const isAddPointModalOpened = useState('isAddPointModalOpened');
 const mDialog = ref('mDialog');
 
 const emit = defineEmits<{
      (e: 'opened'): void,
      (e: 'closed'): void,
-     // (e: 'update:isVisible', value: boolean): void
+     (e: 'update:isVisible', value: boolean): void
 }>()
 
 const props = defineProps<{
      title: string,
-     // isVisible: boolean,
+     isVisible: boolean,
      isForm: boolean,
 }>()
-// const isVisible = computed({
-//      get() {
-//           return props.isVisible;
-//      },
-//      set(isVisible) {
-//           emit('update:isVisible', isVisible)
-//      }
-// })
+const isVisible = computed({
+     get() {
+          return props.isVisible;
+     },
+     set(isVisible) {
+          emit('update:isVisible', isVisible)
+     }
+})
  
 const onOpened = ()=>{
      console.log('ModalPrimary is opened and animations are done. - core');

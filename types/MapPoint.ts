@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 export interface MapPoint {
-	_id?: mongoose.Types.ObjectId;
+	_id?: mongoose.Types.ObjectId | string;
 	name: string;
 	city: string;
 	category?: string | {}[];

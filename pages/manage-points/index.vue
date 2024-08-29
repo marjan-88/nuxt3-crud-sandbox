@@ -9,13 +9,13 @@
                     <div>
                          <div class="mb-8">                              
                               <div class="card-header mb-4">
-                                   <h2 class="font-semibold ">List of points: <span>{{ originalMapPointsLength }}</span></h2>
+                                   <h2 class="font-semibold ">List of points: <span>{{ count }}</span></h2>
                               </div>
                               <div class="flex gap-4 items-center justify-between  mb-4">
                                    <el-button 
                                         type="primary" 
                                         class="w-max " 
-                                        @click="handleAddPointModal()"
+                                        @click="handleAddPointModal"
                                    >                                  
                                         Add point
                                         <el-icon class="ml-2">
@@ -43,16 +43,18 @@
           <div v-else>
                <LoadingSpinner />
           </div>
-
      
-          <!-- <AddPointModal :isVisible="isAddPointModalOpened" @form-submitted="isAddPointModalOpened = false" /> -->
-          <AddPointModal 
+          <!-- <AddPointModal 
                title="Add Point" 
-               :dialogVisible ="isAddPointModalOpened as boolean"
+               :dialogVisible ="isAddPointModalOpened"
+               @form-submitted="isAddPointModalOpened = false"
+               @closed="isAddPointModalOpened = false"
+          /> -->
+          <AddPointModal 
+               title="Add Point"               
                @form-submitted="isAddPointModalOpened = false"
                @closed="isAddPointModalOpened = false"
           />
-
      </div>
 </template>
 
@@ -61,6 +63,7 @@ import { ElButton, ElIcon } from 'element-plus'
 import { storeToRefs } from 'pinia';
 import { useMapPointsStore } from '~/stores/MapPointsStore';
 import { Search } from '@element-plus/icons-vue';
+import AddPointModal from '~/components/modals/AddPointModal.vue';
 const isAddPointModalOpened = useState('isAddPointModalOpened');
 
 definePageMeta({
@@ -69,6 +72,7 @@ definePageMeta({
 
 const mapPointsStore = useMapPointsStore();
 const {
+     count,
      mapPoints,
      isLoading
 } = storeToRefs(mapPointsStore);
@@ -82,7 +86,6 @@ const handlePointsFilter = useDebounceFn(() => {
         return name.includes(searchTerm) || city.includes(searchTerm);
     });
 }, 500);
-const originalMapPointsLength = ref(mapPoints.value.length);
 
 const handleAddPointModal = ()=> {
      return isAddPointModalOpened.value = true

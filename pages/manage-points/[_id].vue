@@ -6,7 +6,8 @@
                </template>
           </el-page-header>
           <div class="p-2 bg-white rounded-md shadow-md" v-if="!isLoading">
-               <h2 class="p-2" v-if="mapPoint === undefined || null">No content found</h2>
+               <!-- <h2 class="p-2" v-if="mapPoint === undefined || null">No content found</h2> -->
+               <h2 class="p-2" v-if="!mapPoint">No content found</h2>
                <div v-else>
                     <div class="flex flex-col gap-y-4 p-6">
                          <p>Name: {{ mapPoint?.name }}</p>
@@ -27,7 +28,8 @@
                                    <ElIconDelete />
                               </el-icon>
                          </el-button>
-                         <el-button class="w-max" type="success" @click="onEdit">
+                         <!-- <el-button class="w-max" type="success" @click="onEdit"> -->
+                         <el-button class="w-max" type="success" @click="isOpened = true">
                               Edit point
                               <el-icon class="ml-2">
                                    <ElIconEdit />
@@ -40,32 +42,33 @@
           <div v-else>
                <LoadingSpinner />
           </div>
-          <ModalPrimary  title="Edit Point" :isForm="true" v-model:isVisible="dialogVisible">              
-               <EditPointForm :editedPoint="mapPoint!"  @form-submitted="onCancel"/>
-          </ModalPrimary>
-          
+      
+          <EditPointModal 
+               :editedPoint="mapPoint!" 
+               v-model:dialogVisible="isOpened" 
+               @form-submitted="onCancel" 
+               @modal-closed="onCancel" 
+          />
      </div>
 </template>
 
 <script setup lang="ts">
-import type { MapPoint } from '~/types/MapPoint';
+// import type { MapPoint } from '~/types/MapPoint';
 import { computed } from 'vue';
 import { useMapPointsStore } from '~/stores/MapPointsStore';
+import EditPointModal from '~/components/modals/EditPointModal.vue';
 const route = useRoute();
 const router = useRouter();
 const mapPointsStore = useMapPointsStore();
 const { mapPoints, isLoading } = storeToRefs(mapPointsStore);
 const point_ID = route.params._id;
 // const isEditing = ref<boolean>(false);
-let dialogVisible = ref(false);//trigger visibility
-const onCancel = () => {
-     dialogVisible.value = false;
-}
+let isOpened = ref(false);//trigger visibility
 
 const mapPoint = computed(() => {
      return mapPoints.value.find(point => point?._id?.toString() === point_ID);
 });
-console.log('Parent mapPoint', mapPoint);
+// console.log('Parent mapPoint', mapPoint);
 // const pointInfo = mapPoint.value ?? null;
 // console.log('mapPoint !!!', pointInfo);
 
@@ -77,10 +80,11 @@ const onDelete = () => {
                     const idToDelete = pointToDelete._id!.toString();
                     if (idToDelete) {
                          mapPointsStore.removePoint(idToDelete);
-                         router.push('/map');
+                         router.push('/manage-points');
                     }
                })
-               .catch(() => {
+               .catch((e) => {
+                    console.error('coś nie działa z usuwaniem:', e);
                     // catch error
                });
      }
@@ -88,10 +92,11 @@ const onDelete = () => {
 const onEdit = () => {
      const pointToEdit = mapPoints.value.find(point => point?._id?.toString() === point_ID);
      if (pointToEdit) {
-          dialogVisible.value = true;      
-          // 
+          isOpened.value = true;      
      }
-
+}
+const onCancel = () => {
+     isOpened.value = false;
 }
 
 //TODO: add date formatter

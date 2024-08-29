@@ -1,6 +1,5 @@
 <template>
-    <!-- <div title="Add Point" :isVisible="dialogVisible" :isForm="true"> -->
-    <div title="Edit Point"   :isForm="true">
+    <div title="Edit Point" :isForm="true">
          <el-form :label-position="labelPosition" ref="formDialogRef" :rules="rules" :model="form" label-width="auto"
               class="flex flex-col gap-3 " status-icon>     
               <el-form-item label="Name" class="basis-full" prop="name">
@@ -28,7 +27,6 @@
                     <el-input v-model.number="form.lng" type="text" />
                </el-form-item>
               </div>
-
               <el-form-item label="Url" class="basis-full" prop="url">
                    <el-input v-model="form.url"/>
               </el-form-item>
@@ -57,13 +55,7 @@ const props = defineProps<{
      editedPoint: MapPoint,
 }>()
 
-console.log(props.editedPoint);
 
-
-import { isVisible } from 'element-plus/es/utils';
-// defineProps<{
-//     dialogVisible: boolean;
-// }>()
 const emit = defineEmits(['form-submitted'])
 const mapPointsStore = useMapPointsStore();
 const formDialogRef = ref<FormInstance>();
@@ -87,7 +79,6 @@ const categories = ref([
          value: 'violet'
     },
 ])
-
 interface RuleForm extends Omit<MapPoint, '_id' | 'rating' | 'isFavorite' | 'createdAt' | 'updatedAt'>{};
 const form = reactive<RuleForm>({
     name: props.editedPoint.name,
@@ -151,8 +142,6 @@ const rules = reactive<FormRules<RuleForm>>({
     ],
 
 })
-// const userID = computed(() => data.value?.user? ?? undefined);
-// console.log('user', userID.value);
 
 const submitForm = async (formEl: FormInstance | undefined, userID: string | undefined) => {
     if (!formEl ) return;
@@ -175,7 +164,6 @@ const submitForm = async (formEl: FormInstance | undefined, userID: string | und
                         const stringID = props.editedPoint._id!.toString();
                         await mapPointsStore.editPoint(stringID, newPoint);
                    }
-
                    emit('form-submitted');
               } catch (error) {
                    console.error('Error adding new point:', error);

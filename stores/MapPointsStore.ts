@@ -22,7 +22,7 @@ export const useMapPointsStore = defineStore("mapPoints", () => {
 			isLoading.value = false;
 		}
 	};
-
+	
 	const addPoint = async (newPoint: MapPoint) => {
 		try {
 			console.log("Request Payload:", JSON.stringify(newPoint));

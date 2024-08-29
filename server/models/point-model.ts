@@ -3,7 +3,7 @@ import { model, Schema } from 'mongoose';
 const pointSchema = new Schema({ 
     name: { type: String, required: true },
     city: { type: String, required: true },
-    category: { type: Schema.Types.Mixed, required: false }, // Can be a string or an array of strings
+    category: { type: [String], required: false }, // Can be a string or an array of strings
     lat: { type: Number, required: true },
     lng: { type: Number, required: true },
     img: { type: String, required: false },

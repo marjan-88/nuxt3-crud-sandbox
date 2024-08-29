@@ -59,8 +59,8 @@ export default NuxtAuthHandler({
 
 	callbacks: {
 		async jwt({ token, user, account }) {
-			// Check if this is a new user and create them in the database
 			if (account && user) {
+				// Check if the user exists by email (a more reliable unique identifier)
 				const existingUser = await User.findOne({ email: user.email });
 				if (!existingUser) {
 					const newUser = new User({
@@ -75,7 +75,7 @@ export default NuxtAuthHandler({
 					token.userId = existingUser._id;
 				}
 			}
-
+		
 			return token;
 		},
 

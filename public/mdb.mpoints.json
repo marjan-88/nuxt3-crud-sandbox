@@ -1,6 +1,6 @@
 [
 	{
-		"_id": "64e1538b234f1c00127e129b",
+		"_id": "64e1538b234f1c00113e12a2",
 		"name": "Wawel Royal Castle",
 		"city": "Kraków",
 		"category": ["Historical", "Museum"],
@@ -16,7 +16,7 @@
 		"createdBy": "admin"
 	},
 	{
-		"_id": "64e1538b234f1c00127e129c",
+		"_id": "64e1538b234f1c00115e12a2",
 		"name": "Warsaw Old Town",
 		"city": "Warsaw",
 		"category": ["Historical", "Tourist Attraction"],
@@ -32,7 +32,7 @@
 		"createdBy": "user123"
 	},
 	{
-		"_id": "64e1538b234f1c00127e129d",
+		"_id": "64e1538b234f1c00122e12a2",
 		"name": "Masurian Lakes",
 		"city": "Giżycko",
 		"category": ["Nature", "Outdoor"],
@@ -48,7 +48,7 @@
 		"createdBy": "natureLover"
 	},
 	{
-		"_id": "64e1538b234f1c00127e129e",
+		"_id": "64e1538b234f1c00127e12912",
 		"name": "Tatra Mountains",
 		"city": "Zakopane",
 		"category": ["Nature", "Mountain"],
@@ -64,7 +64,7 @@
 		"createdBy": "mountainExplorer"
 	},
 	{
-		"_id": "64e1538b234f1c00127e129f",
+		"_id": "64e1538b234f1c00127e12911",
 		"name": "Białowieża Forest",
 		"city": "Białowieża",
 		"category": ["Nature", "Green"],

@@ -4,17 +4,16 @@
           <PageHeader v-if="isAuthenticated" />   
           <NuxtPage ></NuxtPage>
      </NuxtLayout>
-</main>
-     
+</main>     
 </template>
 <script setup lang="ts">
 import { useMapPointsStore } from '~/stores/MapPointsStore';
+
 const mapPointsStore = useMapPointsStore();
 const { status } = useAuth();
-const isAuthenticated = computed(() => status.value === 'authenticated' ? true : false);
-// const isAddPointModalOpened = useState<boolean>('isAddPointModalOpened', () => false);
-
-const isAddPointModalOpened = useState<boolean>('isAddPointModalOpened', () => false) as Ref<boolean>;
+// const isAuthenticated = computed(() => status.value === 'authenticated' ? true : false);
+const isAuthenticated = computed(() => status.value === 'authenticated');
+const isAddPointModalOpened = useState<boolean>('isAddPointModalOpened', () => false);
 
 console.log('(app.vue) User authenticated? --->', isAuthenticated.value);
 console.log('(app.vue) Is add-point-modal state set on true? --->', isAddPointModalOpened.value);
